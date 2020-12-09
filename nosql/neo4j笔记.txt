@@ -1,0 +1,32 @@
+Community detection{
+	Member based{
+		similarity：交集/并集，交集/根号积
+		degree
+		reachability
+	}
+	Group based{
+		modlular
+		banlanced
+		dense
+		robust
+		hierachical
+	}
+}非监督学习
+
+louvain:
+模块度
+Q=1/2m * (Aij-ki*kj/2m)* f(ci,cj)   (对i,j求和) f=1 when ci=cj同一社区
+
+1.计算每个节点的模块度（看成社区）
+2.将相邻节点加入社区，找出Q变化最大的那个
+3.重复2直到Q变化小于指定值
+4.压缩社区为节点，更新权重，重复2直到满足需求
+
+neo4j：调用louvain
+CALL gds.louvain.stream('myGraph')
+YIELD nodeId, communityId, intermediateCommunityIds
+RETURN gds.util.asNode(nodeId).name AS name, communityId, intermediateCommunityIds
+ORDER BY name ASC
+
+
+
